@@ -1,7 +1,3 @@
-# Svelte starter
+# <svg-shape> web component
 
-Everything you need:
-- predefined SEO and assets
-- store / state factory
-- Fa for fontawesome
-- Tailwind
+Allows you to have border gradients and/or skewed corners
