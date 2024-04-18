@@ -26,24 +26,20 @@
  * ```
  */
 declare module '$env/static/private' {
-	export const ACSetupSvcPort: string;
-	export const ACSvcPort: string;
 	export const ALLUSERSPROFILE: string;
 	export const APPDATA: string;
 	export const ChocolateyInstall: string;
 	export const ChocolateyLastPathUpdate: string;
 	export const CHROME_CRASHPAD_PIPE_NAME: string;
+	export const CHROME_RESTART: string;
 	export const COLORTERM: string;
 	export const CommonProgramFiles: string;
 	export const CommonProgramW6432: string;
 	export const COMPUTERNAME: string;
 	export const ComSpec: string;
-	export const CUDA_PATH: string;
-	export const CUDA_PATH_V11_3: string;
+	export const configsetroot: string;
 	export const DriverData: string;
-	export const EFC_43000: string;
-	export const EFC_49184: string;
-	export const EFC_52960: string;
+	export const EFC_13064: string;
 	export const FPS_BROWSER_APP_PROFILE_STRING: string;
 	export const FPS_BROWSER_USER_PROFILE_STRING: string;
 	export const GIT_ASKPASS: string;
@@ -56,12 +52,13 @@ declare module '$env/static/private' {
 	export const LOCALAPPDATA: string;
 	export const LOCAL_GIT_DIRECTORY: string;
 	export const LOGONSERVER: string;
+	export const MIC_LD_LIBRARY_PATH: string;
 	export const NODE: string;
 	export const NODE_ENV: string;
 	export const NODE_PATH: string;
 	export const npm_command: string;
 	export const npm_config_engine_strict: string;
-	export const npm_config_node_gyp: string;
+	export const npm_config_frozen_lockfile: string;
 	export const npm_config_registry: string;
 	export const npm_config_resolution_mode: string;
 	export const npm_config_user_agent: string;
@@ -101,14 +98,8 @@ declare module '$env/static/private' {
 	export const npm_package_type: string;
 	export const npm_package_version: string;
 	export const NUMBER_OF_PROCESSORS: string;
-	export const NVCUDASAMPLES11_3_ROOT: string;
-	export const NVCUDASAMPLES_ROOT: string;
-	export const NVM_HOME: string;
-	export const NVM_SYMLINK: string;
-	export const NVTOOLSEXT_PATH: string;
 	export const OneDrive: string;
 	export const OneDriveConsumer: string;
-	export const OPENSSL_CONF: string;
 	export const ORIGINAL_XDG_CURRENT_DESKTOP: string;
 	export const OS: string;
 	export const Path: string;
@@ -125,9 +116,8 @@ declare module '$env/static/private' {
 	export const PROMPT: string;
 	export const PSModulePath: string;
 	export const PUBLIC: string;
-	export const QTWEBENGINE_CHROMIUM_FLAGS: string;
-	export const QT_D3DCREATE_MULTITHREADED: string;
-	export const RlsSvcPort: string;
+	export const QT_DPI_ADJUSTMENT_POLICY: string;
+	export const QT_OPENGL_BUGLIST: string;
 	export const SESSIONNAME: string;
 	export const SystemDrive: string;
 	export const SystemRoot: string;
@@ -176,24 +166,20 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
-		ACSetupSvcPort: string;
-		ACSvcPort: string;
 		ALLUSERSPROFILE: string;
 		APPDATA: string;
 		ChocolateyInstall: string;
 		ChocolateyLastPathUpdate: string;
 		CHROME_CRASHPAD_PIPE_NAME: string;
+		CHROME_RESTART: string;
 		COLORTERM: string;
 		CommonProgramFiles: string;
 		CommonProgramW6432: string;
 		COMPUTERNAME: string;
 		ComSpec: string;
-		CUDA_PATH: string;
-		CUDA_PATH_V11_3: string;
+		configsetroot: string;
 		DriverData: string;
-		EFC_43000: string;
-		EFC_49184: string;
-		EFC_52960: string;
+		EFC_13064: string;
 		FPS_BROWSER_APP_PROFILE_STRING: string;
 		FPS_BROWSER_USER_PROFILE_STRING: string;
 		GIT_ASKPASS: string;
@@ -206,12 +192,13 @@ declare module '$env/dynamic/private' {
 		LOCALAPPDATA: string;
 		LOCAL_GIT_DIRECTORY: string;
 		LOGONSERVER: string;
+		MIC_LD_LIBRARY_PATH: string;
 		NODE: string;
 		NODE_ENV: string;
 		NODE_PATH: string;
 		npm_command: string;
 		npm_config_engine_strict: string;
-		npm_config_node_gyp: string;
+		npm_config_frozen_lockfile: string;
 		npm_config_registry: string;
 		npm_config_resolution_mode: string;
 		npm_config_user_agent: string;
@@ -251,14 +238,8 @@ declare module '$env/dynamic/private' {
 		npm_package_type: string;
 		npm_package_version: string;
 		NUMBER_OF_PROCESSORS: string;
-		NVCUDASAMPLES11_3_ROOT: string;
-		NVCUDASAMPLES_ROOT: string;
-		NVM_HOME: string;
-		NVM_SYMLINK: string;
-		NVTOOLSEXT_PATH: string;
 		OneDrive: string;
 		OneDriveConsumer: string;
-		OPENSSL_CONF: string;
 		ORIGINAL_XDG_CURRENT_DESKTOP: string;
 		OS: string;
 		Path: string;
@@ -275,9 +256,8 @@ declare module '$env/dynamic/private' {
 		PROMPT: string;
 		PSModulePath: string;
 		PUBLIC: string;
-		QTWEBENGINE_CHROMIUM_FLAGS: string;
-		QT_D3DCREATE_MULTITHREADED: string;
-		RlsSvcPort: string;
+		QT_DPI_ADJUSTMENT_POLICY: string;
+		QT_OPENGL_BUGLIST: string;
 		SESSIONNAME: string;
 		SystemDrive: string;
 		SystemRoot: string;
