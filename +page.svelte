@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { interpolateLab } from 'd3-interpolate';
 	import { spring, tweened } from 'svelte/motion';
-	import SvgShape from '$lib/components/SvgShape.svelte';
+	import SvgShape from './src/lib/SvgShape.svelte';
 
 	let colors = {
 		bgFrom: 'red',

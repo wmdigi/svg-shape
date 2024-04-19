@@ -1,18 +1,13 @@
-import { sveltekit } from '@sveltejs/kit/vite';
-import { sveltePreprocess } from 'svelte-preprocess/dist/autoProcess';
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 
-/** @type {import('vite').UserConfig} */
-const config = {
+// https://vitejs.dev/config/
+export default defineConfig({
 	plugins: [
-		sveltekit({
-			preprocess: sveltePreprocess(),
-			include: /\.component\.svelte$/,
+		svelte({
 			compilerOptions: {
-			  customElement: true,
+				customElement: true,
 			},
-			emitCss: false,
-		  })
-	]
-};
-
-export default config;
+		}),
+	],
+});
