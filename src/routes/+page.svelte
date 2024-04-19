@@ -149,7 +149,7 @@
 			br={$shape.br}
 			tl={$shape.tl}
 			border={$shape.border}
-			style={`position: absolute; top:10%; left:0; z-index: 0; filter: blur(50px); opacity: 50%; overflow: hidden; width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px; transform: rotate(${$shape.rotation}deg);`}
+			style={`position: absolute; top:10%; left:0; z-index: 0; filter: blur(50px); opacity: 50%; width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px; transform: rotate(${$shape.rotation}deg);`}
 		/>
 	</div>
 
