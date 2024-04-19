@@ -1,5 +1,5 @@
 {
-	"name": "@gauel/supershape",
+	"name": "@gauel/svg-shape",
 	"version": "1.0.0",
 	"description": "A custom web component for a shape with configurable properties.",
 	"type": "module",
