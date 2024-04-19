@@ -6,7 +6,10 @@ const config = {
 	kit: {
 		adapter: adapter({})
 	},
-	preprocess: vitePreprocess()
+	preprocess: vitePreprocess(),
+	compilerOptions: {
+		customElement: true,
+	}
 };
 
 export default config;

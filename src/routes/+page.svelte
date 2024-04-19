@@ -1,117 +1,165 @@
 <script>
-	import { onMount } from "svelte";
-	import { spring } from "svelte/motion";
+	import { onMount } from 'svelte';
+	import { interpolateLab } from 'd3-interpolate';
+	import { spring, tweened } from 'svelte/motion';
+	import SvgShape from '$lib/components/SvgShape.svelte';
 
-	let shape = spring({
-		tl: 0,
-		tr:0,
-		bl:0,
-		br:0,
-		border:0,
-		border-width: 0
-	}, {
-		stiffness: 0.1,
-		damping: 0.25
+	let colors = {
+		bgFrom: 'red',
+		bgTo: 'green',
+		borderFrom: 'green',
+		borderTo: 'yellow'
+	};
+
+	let shapes = [
+		{
+			shape: {
+				w: 400,
+				h: 200,
+				tl: 50,
+				tr: 0,
+				bl: 0,
+				br: 0,
+				border: 2,
+				radius: 0,
+				rotation: 0,
+				bgFrom: 200,
+				bgTo: 260,
+				borderFrom: 190,
+				borderTo: 270
+			},
+			colors: {
+				bgFrom: 'red',
+				bgTo: 'green',
+				borderFrom: 'white',
+				borderTo: 'black'
+			}
+		},
+		{
+			shape: {
+				w: 220,
+				h: 220,
+				tl: 16,
+				tr: 16,
+				bl: 16,
+				br: 16,
+				border: 1,
+				radius: 0,
+				rotation: 0,
+				bgFrom: 50,
+				bgTo: 25,
+				borderFrom: 95,
+				borderTo: 80
+			},
+			colors: {
+				bgFrom: 'red',
+				bgTo: 'green',
+				borderFrom: 'white',
+				borderTo: 'black'
+			}
+		},
+		{
+			shape: {
+				w: 128,
+				h: 128,
+				tl: 32,
+				tr: 32,
+				bl: 32,
+				br: 32,
+				border: 1,
+				radius: 0,
+				rotation: 45,
+				bgFrom: 10,
+				bgTo: 50,
+				borderFrom: 15,
+				borderTo: 55
+			},
+			colors: {
+				bgFrom: 'blue',
+				bgTo: 'red',
+				borderFrom: 'white',
+				borderTo: 'black'
+			}
+		},
+		{
+			shape: {
+				w: 512,
+				h: 256,
+				tl: 0,
+				tr: 16,
+				bl: 0,
+				br: 56,
+				border: 0,
+				radius: 16,
+				rotation: 0,
+				bgFrom: 40,
+				bgTo: 5,
+				borderFrom: 1,
+				borderTo: 5
+			},
+			colors: {
+				bgFrom: 'yellow',
+				bgTo: 'black',
+				borderFrom: 'white',
+				borderTo: 'black'
+			}
+		}
+	];
+
+	let shape = spring(shapes[0].shape, {
+		stiffness: 0.08,
+		damping: 1
 	});
 
-	onMount(() => {
-		class SvgShape extends HTMLElement {
-			constructor() {
-				super();
-				this.attachShadow({ mode: "open" });
-				this.shadowRoot.innerHTML = `
-					<svg viewBox="0 0 0 0" preserveAspectRatio="none" style="width: 100%; height: 100%; display: block; position: absolute; inset: 0; z-index: 0;">
-						<path d="" style="fill: url(#super-shape-bg-gradient); stroke: url(#super-shape-border-gradient); stroke-width: var(--super-shape-border-width, 0px); vector-effect: non-scaling-stroke;"></path>
-						<linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="super-shape-border-gradient">
-							<stop offset="0%" style="stop-color: var(--super-shape-border-from, var(--super-shape-border));" />
-							<stop offset="100%" style="stop-color: var(--super-shape-border-to, var(--super-shape-border));" />
-						</linearGradient>
-						<linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="super-shape-bg-gradient">
-							<stop offset="0%" style="stop-color: var(--super-shape-bg-from, var(--super-shape-bg));" />
-							<stop offset="100%" style="stop-color: var(--super-shape-bg-to, var(--super-shape-bg));" />
-						</linearGradient>
-					</svg>
-					<div style="z-index:1; position:relative; width:100%; height:100%">
-						<slot></slot>
-					</div>`;
-				}
-				
-				connectedCallback() {
-					this.updateShape();
-					window.addEventListener("resize", () => this.updateShape());
-				}
-				
-				disconnectedCallback() {
-					window.removeEventListener("resize", () => this.updateShape());
-				}
-				
-				static get observedAttributes() {
-					return [
-				"tl",
-				"tr",
-				"bl",
-				"br",
-				"border",
-				"border-from",
-				"border-to",
-				"border-width",
-				"bg",
-				"bg-from",
-				"bg-to",
-			];
-		}
-		
-		attributeChangedCallback(name, oldValue, newValue) {
-			this.style.setProperty(`--super-shape-${name}`, newValue);
-			this.updateShape();
-		}
-		
-		updateShape() {
-			const svg = this.shadowRoot.querySelector("svg");
-			const path = this.shadowRoot.querySelector("path");
-			const rect = this.getBoundingClientRect();
-
-			this.style.setProperty("display", "block");
-			this.style.setProperty("position", "relative");
-			
-			svg.setAttribute("viewBox", `0 0 ${rect.width} ${rect.height}`);
-			
-			const strokeWidth = parseInt(this.getAttribute("border-width") || 0);
-			const adjust = strokeWidth / 2;
-			
-			const tl = parseFloat(this.getAttribute("tl") || 0);
-			const tr = parseFloat(this.getAttribute("tr") || 0);
-			const br = parseFloat(this.getAttribute("br") || 0);
-			const bl = parseFloat(this.getAttribute("bl") || 0);
-			
-			const d = `
-			M ${tl + adjust},${adjust} 
-			L ${rect.width - tr - adjust},${adjust} 
-			L ${rect.width - adjust},${tr + adjust} 
-			L ${rect.width - adjust},${rect.height - br - adjust}
-			L ${rect.width - br - adjust},${rect.height - adjust}
-			L ${bl + adjust},${rect.height - adjust}
-			L ${adjust},${rect.height - bl - adjust}
-			L ${adjust},${tl + adjust} 
-			Z
-	        `;
-			
-			path.setAttribute("d", d);
-		}
+	function updateShape(index) {
+		shape.set(shapes[index].shape);
 	}
-	
-	customElements.define('svg-shape', SvgShape);
-});
+
+	onMount(() => {
+		setInterval(() => {
+			let randomIndex = Math.floor(Math.random() * shapes.length);
+			updateShape(randomIndex);
+			colors = shapes[randomIndex].colors;
+		}, 2000);
+	});
 </script>
 
-<div class="text-white w-full h-screen flex flex-col items-center justify-center gap-4 ">
-	<svg-shape
-	bg-from="green"
-	bg-to="yellow"
-	tr="24"
-	class="h-32 w-32 rounded-xl overflow-hidden"
-	>
-	</svg-shape>
-	<h1 class="text-clamp-xs font-bold uppercase">Svelte starter</h1>
+<div class="text-white w-full h-screen flex flex-col items-center justify-center gap-4">
+
+	<div class="relative">
+		<SvgShape
+			bgFrom={`hsl(${$shape.bgFrom}, 100%, 50%)`}
+			bgTo={`hsl(${$shape.bgTo}, 100%, 50%)`}
+			borderFrom={`hsl(${$shape.borderFrom}, 100%, 50%)`}
+			borderTo={`hsl(${$shape.borderTo}, 100%, 50%)`}
+			tr={$shape.tr}
+			bl={$shape.bl}
+			br={$shape.br}
+			tl={$shape.tl}
+			border={$shape.border}
+			style={`position: relative; overflow: hidden; width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px; transform: rotate(${$shape.rotation}deg);`}
+		/>
+		<SvgShape
+			bgFrom={`hsl(${$shape.bgFrom}, 100%, 50%)`}
+			bgTo={`hsl(${$shape.bgTo}, 100%, 50%)`}
+			borderFrom={`hsl(${$shape.borderFrom}, 100%, 50%)`}
+			borderTo={`hsl(${$shape.borderTo}, 100%, 50%)`}
+			tr={$shape.tr}
+			bl={$shape.bl}
+			br={$shape.br}
+			tl={$shape.tl}
+			border={$shape.border}
+			style={`position: absolute; top:10%; left:0; z-index: 0; filter: blur(50px); opacity: 50%; overflow: hidden; width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px; transform: rotate(${$shape.rotation}deg);`}
+		/>
+	</div>
+
+	<h1 class="text-clamp-xs font-bold uppercase">{`<svg-shape>`}</h1>
 	<p class="opacity-50">With our custom features</p>
 </div>
+
+<style>
+	svg-shape {
+		position: relative;
+		display: block;
+	}
+</style>

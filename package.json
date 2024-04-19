@@ -33,5 +33,8 @@
 		"typescript": "^5.4.5",
 		"vite": "^5.2.9"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"d3-interpolate": "^3.0.1"
+	}
 }
