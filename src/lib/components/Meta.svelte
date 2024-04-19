@@ -1,7 +1,7 @@
 <script>
 	/* Default values */
-	let kicker = 'Kicker — ',
-		title = 'Title',
+	let kicker = '<svg-shape> — ',
+		title = 'The best shape in the world',
 		description = 'Description',
 		shareImage = '/shareimage.jpg',
 		themeColor = '#000';
