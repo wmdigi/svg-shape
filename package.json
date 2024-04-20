@@ -3,7 +3,11 @@
 	"version": "1.0.0",
 	"description": "A custom web component for a shape with configurable properties.",
 	"type": "module",
-	"keywords": ["web-component", "shape", "custom-element"],
+	"keywords": [
+		"web-component",
+		"shape",
+		"custom-element"
+	],
 	"author": "Gauel",
 	"license": "MIT",
 	"files": [
@@ -21,8 +25,10 @@
 		"autoprefixer": "^10.4.19",
 		"esbuild": "^0.20.2",
 		"esbuild-svelte": "^0.8.0",
+		"highlight.js": "^11.9.0",
 		"postcss": "^8.4.38",
 		"svelte": "^4.2.12",
+		"svelte-highlight": "^7.6.0",
 		"tailwindcss": "^3.4.3",
 		"vite": "^5.2.0"
 	}

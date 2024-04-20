@@ -1,155 +1,96 @@
 <script>
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
-	import SvgShape from './SvgShape.svelte';
+	import { HighlightSvelte } from "svelte-highlight";
+	import { shapes } from './shapes';
 
-	let colors = {
-		bgFrom: 'red',
-		bgTo: 'green',
-		borderFrom: 'green',
-		borderTo: 'yellow'
-	};
-
-	let shapes = [
-		{
-			shape: {
-				w: 400,
-				h: 200,
-				tl: 50,
-				tr: 0,
-				bl: 0,
-				br: 0,
-				border: 2,
-				radius: 0,
-				rotation: 0,
-				bgFrom: 200,
-				bgTo: 260,
-				borderFrom: 190,
-				borderTo: 270
-			},
-			colors: {
-				bgFrom: 'red',
-				bgTo: 'green',
-				borderFrom: 'white',
-				borderTo: 'black'
-			}
-		},
-		{
-			shape: {
-				w: 220,
-				h: 220,
-				tl: 16,
-				tr: 16,
-				bl: 16,
-				br: 16,
-				border: 1,
-				radius: 0,
-				rotation: 0,
-				bgFrom: 50,
-				bgTo: 25,
-				borderFrom: 95,
-				borderTo: 80
-			},
-			colors: {
-				bgFrom: 'red',
-				bgTo: 'green',
-				borderFrom: 'white',
-				borderTo: 'black'
-			}
-		},
-		{
-			shape: {
-				w: 128,
-				h: 128,
-				tl: 32,
-				tr: 32,
-				bl: 32,
-				br: 32,
-				border: 1,
-				radius: 0,
-				rotation: 45,
-				bgFrom: 10,
-				bgTo: 50,
-				borderFrom: 15,
-				borderTo: 55
-			},
-			colors: {
-				bgFrom: 'blue',
-				bgTo: 'red',
-				borderFrom: 'white',
-				borderTo: 'black'
-			}
-		},
-		{
-			shape: {
-				w: 512,
-				h: 256,
-				tl: 0,
-				tr: 16,
-				bl: 0,
-				br: 56,
-				border: 0,
-				radius: 16,
-				rotation: 0,
-				bgFrom: 40,
-				bgTo: 5,
-				borderFrom: 1,
-				borderTo: 5
-			},
-			colors: {
-				bgFrom: 'yellow',
-				bgTo: 'black',
-				borderFrom: 'white',
-				borderTo: 'black'
-			}
-		}
-	];
-
-	let shape = spring(shapes[0].shape, {
-		stiffness: 0.08,
-		damping: 1
+	let code = '',
+	randomIndex = 0,
+	shape = spring(shapes[3], {
+		stiffness: 0.05,
+		damping: 0.5
 	});
 
+	function toRgba(rgbaArray) {
+		if (!rgbaArray || !Array.isArray(rgbaArray) || rgbaArray.length !== 4) {
+			console.error('Invalid RGBA array:', rgbaArray);
+			return 'rgba(0,0,0,1)';
+		}
+
+		return `rgba(${rgbaArray.join(', ')})`;
+	};
+
 	function updateShape(index) {
-		shape.set(shapes[index].shape);
+		shape.set(shapes[index]);
+
+		code = `
+		<svg-shape
+			bgFrom={${toRgba(shapes[index].bgFrom)}}
+			bgTo={${toRgba(shapes[index].bgTo)}}
+			borderTo={${toRgba(shapes[index].borderFrom)}}
+			borderFrom={${toRgba(shapes[index].borderTo)}}
+			tr={${shapes[index].tr}}
+			bl={${shapes[index].bl}}
+			br={${shapes[index].br}}
+			tl={${shapes[index].tl}}
+			border={${shapes[index].border}}
+		/>
+		`;
 	}
 
 	onMount(() => {
-		setInterval(() => {
-			let randomIndex = Math.floor(Math.random() * shapes.length);
+		let flip = setInterval(() => {
+			randomIndex = (randomIndex + 1) % shapes.length; // Increment and wrap around
 			updateShape(randomIndex);
-			colors = shapes[randomIndex].colors;
 		}, 2000);
+
+		return () => clearInterval(flip);
 	});
 </script>
 
 <div class="text-white w-full h-screen flex flex-col items-center justify-center gap-4">
-
-	<div class="relative">
-		<SvgShape
-			bgFrom={`hsl(${$shape.bgFrom}, 100%, 50%)`}
-			bgTo={`hsl(${$shape.bgTo}, 100%, 50%)`}
-			borderFrom={`hsl(${$shape.borderFrom}, 100%, 50%)`}
-			borderTo={`hsl(${$shape.borderTo}, 100%, 50%)`}
-			tr={$shape.tr}
-			bl={$shape.bl}
-			br={$shape.br}
-			tl={$shape.tl}
-			border={$shape.border}
-			style={`position: relative; overflow: hidden; width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px; transform: rotate(${$shape.rotation}deg);`}
-		/>
-		<SvgShape
-			bgFrom={`hsl(${$shape.bgFrom}, 100%, 50%)`}
-			bgTo={`hsl(${$shape.bgTo}, 100%, 50%)`}
-			borderFrom={`hsl(${$shape.borderFrom}, 100%, 50%)`}
-			borderTo={`hsl(${$shape.borderTo}, 100%, 50%)`}
-			tr={$shape.tr}
-			bl={$shape.bl}
-			br={$shape.br}
-			tl={$shape.tl}
-			border={$shape.border}
-			style={`position: absolute; top:10%; left:0; z-index: 0; filter: blur(50px); opacity: 50%; width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px; transform: rotate(${$shape.rotation}deg);`}
-		/>
+	<div class="flex flex-col md:flex-row">
+		<div class="relative w-[375px] sm:w-[450px] h-[450px] items-center justify-center flex">
+			<svg-shape
+				bgFrom={toRgba($shape.bgFrom)}
+				bgTo={toRgba($shape.bgTo)}
+				borderTo={toRgba($shape.borderFrom)}
+				borderFrom={toRgba($shape.borderTo)}
+				tr={$shape.tr}
+				bl={$shape.bl}
+				br={$shape.br}
+				tl={$shape.tl}
+				border={$shape.border}
+				class="relative overflow-hidden"
+				style={`width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px;`}
+			/>
+			<svg-shape
+				bgFrom={toRgba($shape.bgFrom)}
+				bgTo={toRgba($shape.bgTo)}
+				borderTo={toRgba($shape.borderFrom)}
+				borderFrom={toRgba($shape.borderTo)}
+				tr={$shape.tr}
+				bl={$shape.bl}
+				br={$shape.br}
+				tl={$shape.tl}
+				border={$shape.border}
+				class="absolute top-1/2 left-1/2 z-0 opacity-30"
+				style={`filter: blur(24px); width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px; transform: translate3d(-50%, -45%, 0);`}
+			/>
+		</div>
+		<div class="overflow-hidden w-[450px] relative border border-white/5 shadow-md rounded bg-neutral-900">
+			<div
+				class="absolute top-1/2 left-1/2 z-0 opacity-30 bg-red-500"
+				style={`width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px; transform: translate3d(-50%, -45%, 0);`}
+			/>
+			<!--
+				<HighlightSvelte
+				{code}
+				class="relative items-center justify-center flex bg-transparent"
+				--langtag-background="transparent"
+				/>
+			-->
+			</div>
 	</div>
 
 	<h1 class="text-clamp-xs font-bold uppercase">{`<svg-shape>`}</h1>
