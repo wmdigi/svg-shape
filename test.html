@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script
+			src="https://unpkg.com/@gauel/svg-shape@1.0.0/dist/svg-shape.js"
+			type="module"
+		></script>
+		<script src="/src/components/squircle.js"></script>
+
+		<title>svg-shape — The most modular element there is.</title>
+		<style>
+			@tailwind base;
+			@tailwind components;
+			@tailwind utilities;
+		</style>
+	</head>
+	<body class="w-full h-full bg-black">
+		<div style="width: 100px; height: 100px;">
+			<svg-squircle bg="red" class="squircle" style="color: white">
+				Tests
+			</svg-squircle>
+		</div>
+
+		<div style="width: 100px; height: 100px; position: relative;">
+			<svg-shape style="width: 100px; height: 100px; color: white">
+				Testing test
+			</svg-shape>
+		</div>
+		
+	</body>
+</html>
+
+<style>
+	.squircle {
+		width: 500px;
+		height: 100px;
+	}
+</style>

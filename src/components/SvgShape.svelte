@@ -12,14 +12,38 @@
 		w = 0,
 		h = 0,
 		border = 1,
-		borderFrom = 'white',
-		borderTo = 'white',
+		borderColor = "",
+		borderFrom = '',
+		borderTo = '',
 		bg = '',
 		bgFrom = '',
 		bgTo = '',
 		style = ''
 
 	let d = '';
+
+	let background = `url("data:image/svg+xml;<svg version='1.1'
+	id='shape-1'
+	preserveAspectRatio='none'
+	xmlns='http://www.w3.org/2000/svg'
+	xmlns:xlink='http://www.w3.org/1999/xlink'
+	viewBox='0 0 ${w} ${h}'>
+		<path
+			stroke-width='${border}'
+			fill='url(#super-shape-bg-gradient)'
+			stroke='url(#super-shape-border-gradient)'
+			d='M 0,${h/2} C 0,0 0,0 ${w/2},0 S ${w},0 ${w},${h/2} ${w},${h} ${w/2},${h} 0,${h} 0,${h/2}'>
+			<defs>
+				<linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="super-shape-bg-gradient">
+					<stop offset="0%" stop-color='${bgFrom || bg}' />
+					<stop offset="100%" stop-color='${bgTo || bg}' />
+				</linearGradient>
+				<linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="super-shape-border-gradient">
+					<stop offset="0%" stop-color='${borderFrom || borderColor}' />
+					<stop offset="100%" stop-color='${borderTo || borderColor}' />
+				</linearGradient>
+			</defs>
+	</svg>");`
 
 	// Compute the path 'd' attribute reactively
 	$: if (el) {
