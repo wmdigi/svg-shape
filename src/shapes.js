@@ -21,7 +21,7 @@ export let shapes = [
 		tr: 0,
 		bl: 0,
 		br: 0,
-		border: 1,
+		border: 3,
 		radius: 0,
 		rotation: 0,
 		bgFrom: [0, 128, 0, 1], // Green
@@ -36,7 +36,7 @@ export let shapes = [
 		tr: 16,
 		bl: 16,
 		br: 16,
-		border: 1,
+		border: 2,
 		radius: 0,
 		rotation: 0,
 		bgFrom: [255, 0, 0, 1], // Red

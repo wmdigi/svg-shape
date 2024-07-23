@@ -25,15 +25,15 @@
 
 		code = `
 		<svg-shape
-			bgFrom={${toRgba(shapes[index].bgFrom)}}
-			bgTo={${toRgba(shapes[index].bgTo)}}
-			borderTo={${toRgba(shapes[index].borderFrom)}}
-			borderFrom={${toRgba(shapes[index].borderTo)}}
-			tr={${shapes[index].tr}}
-			bl={${shapes[index].bl}}
-			br={${shapes[index].br}}
-			tl={${shapes[index].tl}}
-			border={${shapes[index].border}}
+			bgFrom="${toRgba(shapes[index].bgFrom)}"
+			bgTo="${toRgba(shapes[index].bgTo)}"
+			borderTo="${toRgba(shapes[index].borderFrom)}"
+			borderFrom="${toRgba(shapes[index].borderTo)}"
+			tr="${shapes[index].tr}"
+			bl="${shapes[index].bl}"
+			br="${shapes[index].br}"
+			tl="${shapes[index].tl}"
+			border="${shapes[index].border}"
 		/>
 		`;
 	}
@@ -79,17 +79,17 @@
 			/>
 		</div>
 		<div class="overflow-hidden w-[450px] relative border border-white/5 shadow-md rounded bg-neutral-900">
+			<!--
 			<div
 				class="absolute top-1/2 left-1/2 z-0 opacity-30 bg-red-500"
 				style={`width: ${$shape.w}px; height: ${$shape.h}px; border-radius: ${$shape.radius}px; transform: translate3d(-50%, -45%, 0);`}
 			/>
-			<!--
+			-->
 				<HighlightSvelte
 				{code}
 				class="relative items-center justify-center flex bg-transparent"
 				--langtag-background="transparent"
 				/>
-			-->
 			</div>
 	</div>
 
